@@ -4,7 +4,7 @@ This is a Medical Web Data collection tool. This app is used a mix of laravel an
 
 ## Get started
 
-To Get started, install the necessary packages i.e. Node modules and php packages
+To Get started, update the `.env` file with the database credentials and then install the necessary packages i.e. Node modules and php packages
 
 ```
 npm install
