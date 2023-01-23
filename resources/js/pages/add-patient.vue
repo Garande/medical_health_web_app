@@ -335,6 +335,9 @@ const setLoading = (val: boolean) => {
 
 const handleSubmit = async (data: any) => {
     try {
+        if (data.currentSymptoms != undefined && data.currentSymptoms != null) {
+            data.currentSymptoms = JSON.stringify(data.currentSymptoms);
+        }
         //
         await store.savePatient(data);
         notif.success("Patient saved successfully");
