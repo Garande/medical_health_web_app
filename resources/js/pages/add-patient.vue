@@ -216,7 +216,7 @@ const fields = ref<FormField[]>([
         label: "Have you ever had feelings or thoughts that you didn't want to live?",
 
         type: "radio",
-        class: "lg:flex-6 md:flex-6 sm:flex-12 xs:flex-12 px-3 py-0.5 mt-0",
+        class: "lg:flex-12 md:flex-12 sm:flex-12 xs:flex-12 px-3 py-0.5 mt-0",
         isRequired: false,
         group: [
             { value: "YES", text: "Yes" },
