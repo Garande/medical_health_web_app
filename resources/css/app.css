@@ -1,0 +1,12 @@
+@import "./_variables.css";
+
+@import "tailwindcss/base";
+/* @tailwind components; */
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+@import "./_components.css";
+
+/* @import "./components/form.css";
+@import "./components/others.css";
+@import "./components/_transitions.css"; */
