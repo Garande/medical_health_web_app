@@ -9,8 +9,7 @@ export interface VCheckboxProps {
     raw?: boolean;
     id: string;
     label: string;
-    trueValue?: string | number | boolean;
-    falseValue?: string | number | boolean;
+    value?: string | number | boolean;
     modelValue?: any;
 }
 
@@ -18,9 +17,8 @@ const emits = defineEmits<VCheckboxEmits>();
 const props = withDefaults(defineProps<VCheckboxProps>(), {
     id: undefined,
     label: undefined,
-    trueValue: true,
-    falseValue: false,
-    modelValue: false,
+    value: undefined,
+    modelValue: undefined,
 });
 
 const $value = ref(props.modelValue as any);
@@ -43,16 +41,15 @@ watch(
             type="checkbox"
             v-model="$value"
             v-bind="$attrs"
-            :true-value="props.trueValue"
-            :false-value="props.falseValue"
             class="w-4 h-4 text-green-600 bg-gray-100 rounded border-gray-300 focus:ring-green-500 focus:ring-2 active:ring-green-500 checked:ring-green-500 checked:text-green-600"
-            :id="`${props.id}_checkbox`"
+            :name="`${props.value}`"
+            :id="props.id"
         />
 
         <span>{{ " " }}</span>
 
         <label
-            :for="`${props.id}_checkbox`"
+            :for="`${props.value}`"
             class="ml-2 text-sm font-medium text-slate-600"
             ><slot>{{ props.label }}</slot></label
         >

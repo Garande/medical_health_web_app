@@ -42,13 +42,12 @@ watch(
             v-model="value"
             v-bind="$attrs"
             class="w-4 h-4 text-green-600 bg-gray-100 rounded border-gray-300 focus:ring-green-500 focus:ring-2 active:ring-green-500 checked:ring-green-500 checked:text-green-600"
-            :id="`${props.id}_radio`"
         />
 
         <span>{{ " " }}</span>
 
         <label
-            :for="`${props.id}_radio`"
+            :for="`${props.id}`"
             class="ml-2 text-sm font-medium text-slate-600"
             ><slot>{{ props.label }}</slot></label
         >

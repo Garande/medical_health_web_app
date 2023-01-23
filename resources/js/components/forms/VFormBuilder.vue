@@ -84,9 +84,6 @@ watch(
 );
 
 const handleCheckbox = (checkId: any, itemId: any) => {
-    // console.log("=== CHECKBOX ===");
-    // console.log(checkId);
-    // console.log(event);
     if (form.value[itemId] != undefined && form.value[itemId] != null) {
         const index = form.value[itemId].indexOf(checkId);
         if (index > -1) {
@@ -94,17 +91,15 @@ const handleCheckbox = (checkId: any, itemId: any) => {
         } else {
             form.value[itemId].push(checkId);
         }
-        // console.log(form.value);
     } else {
         const data = { ...form.value };
         data[itemId] = [checkId];
         form.value = data;
-        // console.log("ME==");
-        // console.log(data);
-        // form.value[itemId] = [];
-        // form.value[itemId].push(checkId);
     }
-    console.log(form.value[itemId]);
+};
+
+const handleRadioCheck = (checkId: any, itemId: any) => {
+    form.value[itemId] = checkId;
 };
 
 const isChecked = (id: string, checkId: any) => {
@@ -112,6 +107,14 @@ const isChecked = (id: string, checkId: any) => {
         form.value[id] != undefined &&
         form.value[id] != null &&
         form.value[id].includes(checkId)
+    );
+};
+
+const isRadioChecked = (id: string, checkId: any) => {
+    return (
+        form.value[id] != undefined &&
+        form.value[id] != null &&
+        form.value[id] == checkId
     );
 };
 
@@ -123,19 +126,7 @@ const handleFileSelection = async (e: any, fieldId: string) => {
 const handleFormSubmission = async (e: any) => {
     try {
         emits("set-loading", true);
-        // if (
-        //     formFiles.value != null &&
-        //     formFiles.value != undefined &&
-        //     Object.values(formFiles.value).length > 0
-        // ) {
-        //     for (const [key, value] of Object.entries(formFiles.value)) {
-        //         if (value != null && value != undefined) {
-        //             const fileUrl = await uploadMediaFile(value);
-        //             form.value[key] = fileUrl;
-        //         }
-        //     }
-        // }
-        //
+
         props.fields.forEach((field) => {
             if (field.isRequired && isEmpty(form.value[field.id])) {
                 throw `${field.label} is required!`;
@@ -265,10 +256,11 @@ const handleFormSubmission = async (e: any) => {
                                 <VCheckbox
                                     v-for="(rItem, rIdx) in item.group"
                                     :key="`check_${rIdx}`"
-                                    :checked="isChecked(item.id, rItem.value)"
+                                    :value="`${rItem.value}`"
                                     :label="rItem.text"
                                     :id="`${rItem.value}`"
-                                    @change="
+                                    :checked="isChecked(item.id, rItem.value)"
+                                    @click="
                                         () =>
                                             handleCheckbox(rItem.value, item.id)
                                     "
@@ -287,7 +279,7 @@ const handleFormSubmission = async (e: any) => {
                                 v-model="form[item.id]"
                                 :label="item.label"
                                 :name="item.id"
-                                :value="'l'"
+                                :value="item.id"
                                 :id="`${item.id}`"
                             />
 
@@ -305,30 +297,20 @@ const handleFormSubmission = async (e: any) => {
                                     :label="rItem.text"
                                     :name="rItem.value"
                                     :value="rItem.value"
+                                    :checked="
+                                        isRadioChecked(item.id, rItem.value)
+                                    "
                                     :id="`${rItem.value}`"
+                                    @click="
+                                        () =>
+                                            handleRadioCheck(
+                                                rItem.value,
+                                                item.id
+                                            )
+                                    "
                                 />
                             </template>
-                            <!-- <div
-                            v-else-if="
-                                item.type == 'radio' &&
-                                (item.group === undefined ||
-                                    item.group.length <= 0)
-                            "
-                            class="flex items-center"
-                        >
-                            <input
-                                type="radio"
-                                v-model="form[item.id]"
-                                class="w-4 h-4 text-green-600 bg-gray-100 rounded border-gray-300 focus:ring-green-500 focus:ring-2 active:ring-green-500"
-                                :id="`${item.id}_radio`"
-                            />
-                            <label
-                                :for="`${item.id}_radio`"
-                                class="ml-2 text-sm font-medium text-slate-600"
-                            >
-                                {{ item.label }}</label
-                            >
-                        </div> -->
+
                             <!--  -->
                             <VInput
                                 v-else
